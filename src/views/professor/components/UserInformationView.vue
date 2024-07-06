@@ -3,18 +3,18 @@
 </script>
 
 <template>
-  <div class=" overflow-hidden shadow rounded-lg bg-[#c6adac] m-10">
-    <div class=" border-gray-200 px-4 py-5 sm:p-0">
-      <dl class="sm:divide-y sm:divide-gray-200">
-        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-700">
+  <div class=" overflow-hidden shadow border rounded-lg bg-[#c6adac] m-10">
+    <div class=" px-4 py-5 sm:p-0">
+      <dl class="sm:divide-gray-200">
+        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm  font-medium text-gray-700">
             نام
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             محمدامین افشاریان شاندیز
           </dd>
         </div>
-        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-700">
             نام کاربری
           </dt>
@@ -22,7 +22,7 @@
             Sucepls
           </dd>
         </div>
-        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-700">
             ایمیل
           </dt>
@@ -30,7 +30,7 @@
             mafsharian45@gmail.com
           </dd>
         </div>
-        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-700">
             شماره تلفن
           </dt>
@@ -38,7 +38,7 @@
             09013359664
           </dd>
         </div>
-        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-700">
             مدرک تحصیلی
           </dt>

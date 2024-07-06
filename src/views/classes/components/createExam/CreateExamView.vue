@@ -2,7 +2,6 @@
 import {ref} from "vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
-import ExamDetailsView from "@/views/classes/components/createExam/ExamDetailsView.vue";
 import NewQuestionView from "@/views/classes/components/createExam/NewQuestionView.vue";
 
 const showPopup = ref(false)
@@ -45,6 +44,10 @@ function createClass (){
             <option>4</option>
             <option>5</option>
           </select>
+        </div>
+        <div class="flex items-center">
+          <input checked id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-700 dark:text-gray-700">مرور دارد</label>
         </div>
         <button type="button" @click="openModal" class="w-full bg-[#523946] text-white py-2 rounded-md hover:bg-blue-600 mt-4">
           ایجاد آزمون

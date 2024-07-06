@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import router from "@/router";
 
+const goToSignUpPage = () => {
+  router.push('/classes');
+};
 </script>
 
 <template>
@@ -14,15 +18,15 @@
             مشاهده
           </button>
         </div>
-        <div class="flex w-full  items-center">
-          <dt class=" text-sm font-medium text-gray-700">
+        <div class="flex w-full justify-between">
+          <dt class="text-xs text-gray-700 w-full">
             در تاریخ 1403/4/15 انجام شد
           </dt>
         </div>
       </div>
     </div>
     <div class="flex justify-center p-4">
-      <button class=" bg-[#523946] text-white p-2 rounded-md hover:bg-blue-600">
+      <button @click="goToSignUpPage" class=" bg-[#523946] text-white p-2 rounded-md hover:bg-blue-600">
         افزودن آزمون
       </button>
     </div>

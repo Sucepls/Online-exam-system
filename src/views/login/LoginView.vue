@@ -41,7 +41,7 @@ export default {
     const message = ref('');
 
     const goToSignUpPage = () => {
-      router.push('/signup');
+      router.push('/auth/signup');
     };
 
     const handleLogin = () => {

@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import router from "@/router";
 
+const goToSignUpPage = () => {
+  router.push('/exams');
+};
 </script>
 
 <template>
@@ -58,12 +62,12 @@
           <dt class="text-sm font-medium text-gray-700">
             آزمون ها
           </dt>
-          <button class="bg-[#523946] text-sm w-2/3  sm:col-span-2 text-white rounded-md hover:bg-blue-600">
+          <button @click="goToSignUpPage" class="bg-[#523946] text-sm w-2/3  sm:col-span-2 text-white rounded-md hover:bg-blue-600">
             مشاهده
           </button>
         </div>
         <div class="flex justify-center p-4">
-          <button class=" bg-[#523946] text-white p-2 rounded-md hover:bg-blue-600">
+          <button  class=" bg-[#523946] text-white p-2 rounded-md hover:bg-blue-600">
             ویرایش
           </button>
         </div>
