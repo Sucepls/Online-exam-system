@@ -1,0 +1,60 @@
+<script setup lang="ts">
+import {ref} from "vue";
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import ExamDetailsView from "@/views/classes/components/createExam/ExamDetailsView.vue";
+import NewQuestionView from "@/views/classes/components/createExam/NewQuestionView.vue";
+
+const showPopup = ref(false)
+const examInfo = ref({
+  examName: '',
+  time: '',
+  number: '',
+  date:'',
+
+})
+function openModal(){
+  showPopup.value = !showPopup.value
+}
+function createClass (){
+}
+</script>
+
+<template>
+  <div class="flex-col flex items-center">
+    <div class="bg-[#c6adac] p-6 shadow-lg text-right mt-10 border rounded-lg">
+      <form>
+        <div class="mb-4">
+          <label for="className" class="block text-sm font-medium text-gray-700">نام آزمون</label>
+          <input v-model="examInfo.examName" type="text" id="className" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+        </div>
+        <div class=" mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">تاریخ آزمون</label>
+          <Datepicker class="mt-1 p-2 border border-gray-300 rounded-md w-full" v-model="examInfo.date" time-picker-inline/>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">زمان آزمون (دقیقه) </label>
+          <input v-model="examInfo.time" type="text" id="description" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">تعداد دفعات مجاز شرکت </label>
+          <select v-model="examInfo.number" type="role" id="role" class="text-right mt-1 p-2 border border-gray-300 rounded-md w-full">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+        <button type="button" @click="openModal" class="w-full bg-[#523946] text-white py-2 rounded-md hover:bg-blue-600 mt-4">
+          ایجاد آزمون
+        </button>
+        <NewQuestionView v-if="showPopup" close=""/>
+      </form>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+</style>
