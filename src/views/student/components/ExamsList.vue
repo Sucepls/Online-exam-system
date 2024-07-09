@@ -2,7 +2,7 @@
 import router from "@/router";
 
 const goToSignUpPage = () => {
-  router.push('/classes');
+  router.push('/class');
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="quiz-container p-4 bg-[#847272] border rounded-lg shadow-lg max-w-md mx-auto w-1/2">
+  <div class="text-gray-700 quiz-container p-4 bg-[#847272] border rounded-lg shadow-lg max-w-md mx-auto w-1/2">
     <div class="question-section mb-4 flex justify-between items-center">
       <h2>
         {{ currentQuestionIndex + 1 }}. {{ questions[currentQuestionIndex].question }}
