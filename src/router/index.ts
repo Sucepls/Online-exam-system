@@ -7,7 +7,7 @@ import ClassesView from "@/views/classes/ClassesView.vue";
 import ExamsView from "@/views/exams/ExamsView.vue";
 import StudentView from "@/views/student/StudentView.vue";
 import StudentClassesView from "@/views/studentClasses/StudentClassesView.vue";
-import LoginView from "@/views/login/LoginView.vue"
+import LoginView from "@/views/login/LoginView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +30,9 @@ const router = createRouter({
       ]
     },
     {
+      meta: {
+        middleware: 'AuthGuard'
+      },
       path: '/',
       name: 'main',
       component: MainLayout,
@@ -40,7 +43,7 @@ const router = createRouter({
           component: ProfessorView
         },
         {
-          path: 'classes',
+          path: 'classes/:id',
           name: 'classes',
           component: ClassesView
         },
@@ -55,7 +58,7 @@ const router = createRouter({
           component: StudentView
         },
         {
-          path: 'class',
+          path: 'class/:id',
           name: 'class',
           component: StudentClassesView
         },

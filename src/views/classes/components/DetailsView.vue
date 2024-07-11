@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import router from "@/router";
+import {useClassStore} from "@/stores/ClassStore";
+import {useRoute} from "vue-router";
+import type {Class} from "@/models/classes.interface";
 
 const showModal = ref(false);
 
-const classInfo = ref({
-  name: 'کلاس 1',
-  creator: 'Sucepls',
-  description: 'کلاس مبانی کامپیوتر',
-  password: '123456789',
-  userCount: 52,
-  link: 'example.com'
-});
+defineProps(['classInfo'])
 
 const goToSignUpPage = () => {
   router.push('/exams');
@@ -48,7 +44,7 @@ const saveChanges = () => {
             نام ایجاد کننده
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ classInfo.creator }}
+            {{ classInfo.instructor?.name }}
           </dd>
         </div>
         <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -64,7 +60,7 @@ const saveChanges = () => {
             رمزعبور
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ classInfo.password }}
+            {{ classInfo.inviteCode }}
           </dd>
         </div>
         <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -72,7 +68,7 @@ const saveChanges = () => {
             تعداد کاربران
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ classInfo.userCount }}
+            {{ classInfo.students?.length }}
           </dd>
         </div>
         <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -80,7 +76,7 @@ const saveChanges = () => {
             لینک کلاس
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ classInfo.link }}
+            http://localhost:5173/classes/{{classInfo.id}}
           </dd>
         </div>
         <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

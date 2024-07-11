@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import {useAuthStore} from "@/stores/AuthStore";
+
+const authStore = useAuthStore()
+const authEdit = ref({...authStore.user})
 
 const showModal = ref(false);
 
-const user = ref({
-  name: 'محمدامین افشاریان شاندیز',
-  username: 'Sucepls',
-  email: 'mafsharian45@gmail.com',
-  phone: '09013359664',
-  degree: 'کارشناسی'
-});
 
 const openModal = () => {
   showModal.value = true;
@@ -34,15 +31,7 @@ const saveChanges = () => {
             نام
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ user.name }}
-          </dd>
-        </div>
-        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-700">
-            نام کاربری
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ user.username }}
+            {{ authStore.user.name }}
           </dd>
         </div>
         <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -50,23 +39,15 @@ const saveChanges = () => {
             ایمیل
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ user.email }}
+            {{ authStore.user.email }}
           </dd>
         </div>
         <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-700">
-            شماره تلفن
+            نقش
           </dt>
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ user.phone }}
-          </dd>
-        </div>
-        <div class="border-b rounded-lg py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-700">
-            مدرک تحصیلی
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ user.degree }}
+            {{ authStore.user.role =="STUDENT"?'دانشجو':'استاد' }}
           </dd>
         </div>
         <div class="flex justify-center p-4">
@@ -88,23 +69,11 @@ const saveChanges = () => {
         <div class="space-y-6">
           <div>
             <label class="block text-sm font-medium text-gray-700">نام</label>
-            <input type="text" v-model="user.name" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">نام کاربری</label>
-            <input type="text" v-model="user.username" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <input type="text" v-model="authEdit.name" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">ایمیل</label>
-            <input type="email" v-model="user.email" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">شماره تلفن</label>
-            <input type="text" v-model="user.phone" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">مدرک تحصیلی</label>
-            <input type="text" v-model="user.degree" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <input type="email" v-model="authEdit.email" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
           </div>
         </div>
       </div>

@@ -3,10 +3,7 @@ import { ref } from 'vue';
 
 const showModal = ref(false);
 
-const newUser = ref({
-  email: '',
-  username: ''
-});
+defineProps(['users'])
 
 const openModal = () => {
   showModal.value = true;
@@ -16,24 +13,15 @@ const closeModal = () => {
   showModal.value = false;
 };
 
-const addUser = () => {
-  if (!newUser.value.email && !newUser.value.username) {
-    alert('لطفاً ایمیل یا نام کاربری را وارد کنید.');
-    return;
-  }
-  // Add logic to add the user
-  console.log('Adding user:', newUser.value);
-  closeModal();
-};
 </script>
 
 <template>
   <div class="shadow border rounded-lg bg-[#c6adac] m-10 w-1/2">
-    <div v-for="i in 5" :key="i" class="border-b rounded-lg border-gray-200 px-4 py-5 sm:p-0">
+    <div v-for="u in users" :key="u.id" class="border-b rounded-lg border-gray-200 px-4 py-5 sm:p-0">
       <dl class="sm:divide-y sm:divide-gray-200">
         <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-700">
-            کاربر {{ i }}
+            {{u.name}}
           </dt>
           <button class="bg-[#523946] text-sm sm:col-span-2 text-white rounded-md hover:bg-blue-600">
             مشاهده

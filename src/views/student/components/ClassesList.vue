@@ -6,15 +6,12 @@
     </div>
     <div class="flex-col flex">
       <div class="flex">
-        <div v-for="i in 3" :key="i" class="border m-1 rounded-lg gap-4">
+        <div v-for="c in classes" :key="c.id" class="border m-1 rounded-lg gap-4">
           <div class="bg-[#c6adac] p-4 rounded">
             <img src="@/assets/background.png" alt="Class Image" class="w-full h-40 object-cover rounded mb-2" />
-            <a href="/class" class="text-lg font-bold mb-2">برنامه نویسی وب - بهمن ۱۴۰۲</a>
-            <div class="text-sm mb-2">محمدجواد ثبوتی - دانشگاه فردوسی مشهد</div>
-            <div class="flex justify-between text-sm">
-              <span>۸۶ نفر</span>
-              <span>۱۴۰۳/۰۱/۰۱</span>
-            </div>
+            <RouterLink :to="{name:'class',params:{id:c.id}}" class="text-lg font-bold mb-2">{{c.name}}</RouterLink>
+            <div class="text-sm mb-2">{{c.description}}</div>
+
           </div>
         </div>
       </div>
@@ -53,7 +50,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
+import {useClassStore} from "@/stores/ClassStore";
+import type {Class} from "@/models/classes.interface";
+import {data} from "autoprefixer";
+
+const classStore = useClassStore()
+const classes = ref([] as Class[])
+onMounted( ()=>{
+  classStore.getStudentClasses().then((data) => {
+    classes.value = data
+  })
+})
+
 
 const showModal = ref(false);
 
