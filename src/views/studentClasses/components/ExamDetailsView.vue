@@ -4,6 +4,8 @@ import nextIcon from '@/assets/Icons/perivous-icon.svg?component'
 import { ref, watch } from 'vue';
 import {type Question, QuestionType} from "@/models/questions.interface";
 import type {Answer} from "@/models/answers.interface";
+import {useAnswerStore} from "@/stores/AnswerStore";
+import {toast} from "vue3-toastify";
 
 const props = defineProps({
   'questions': {
@@ -11,13 +13,28 @@ const props = defineProps({
   },
 });
 
+const useAnswer = useAnswerStore()
 const answers = ref([] as Answer[]);
 const currentAnswer = ref({} as Answer);
 const currentQuestionIndex = ref(0);
 
-
+function submitAnswer(){
+  answers.value[0]={...answers.value[0],examId:props.questions[0].examId,questionId:props.questions[0].id}
+  useAnswer.createAnswer(answers.value).then((data)=>{
+    toast('سوال با موفقیت ایجاد شد', {
+      autoClose: 1500,
+      rtl: true,
+      type: 'success'
+    })
+  }).catch(()=>{
+    toast('سوال ایجاد نشد!', {
+      autoClose: 1500,
+      rtl: true,
+      type: 'error'
+    })
+  })
+}
 watch(currentQuestionIndex, (newIndex, oldIndex) => {
-  // Save the current answer before moving to the next question
   if (oldIndex >= 0) {
     const answer = answers.value.find((a) => a.questionId == props.questions[oldIndex].id);
     if (answer) {
@@ -44,10 +61,6 @@ function prevQuestion() {
   }
 }
 
-function getAnswer(qid: number): Answer {
-  const answer = answers.value.find((a) => a.questionId == qid);
-  return answer ? answer : { examId: props.questions[currentQuestionIndex.value].examId, questionId: qid, choiceId: null, text: '' };
-}
 </script>
 
 <template>
@@ -79,7 +92,7 @@ function getAnswer(qid: number): Answer {
       >
         <backIcon/>
       </button>
-      <button class="btn-prev bg-[#adacc6] p-2 rounded hover:bg-gray-400">اتمام آزمون</button>
+      <button @click="submitAnswer" class="btn-prev bg-[#adacc6] p-2 rounded hover:bg-gray-400">اتمام آزمون</button>
       <button
           @click="nextQuestion"
           class="btn-next bg-[#adacc6] p-2 rounded hover:bg-gray-400"

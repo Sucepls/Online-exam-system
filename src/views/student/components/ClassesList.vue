@@ -11,7 +11,6 @@
             <img src="@/assets/background.png" alt="Class Image" class="w-full h-40 object-cover rounded mb-2" />
             <RouterLink :to="{name:'class',params:{id:c.id}}" class="text-lg font-bold mb-2">{{c.name}}</RouterLink>
             <div class="text-sm mb-2">{{c.description}}</div>
-
           </div>
         </div>
       </div>
@@ -28,17 +27,13 @@
       <div class="px-4 py-5 sm:p-6">
         <div class="space-y-6">
           <div>
-            <label class="block text-sm font-medium text-gray-700">لینک کلاس</label>
-            <input type="text" v-model="newClass.link" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-          </div>
-          <div v-if="newClass.link">
             <label class="block text-sm font-medium text-gray-700">رمز عبور کلاس</label>
-            <input type="password" v-model="newClass.password" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <input type="password" v-model="inviteCode" class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
           </div>
         </div>
       </div>
       <div class="px-4 py-3 sm:px-6 sm:flex sm:justify-between sm:flex-row-reverse">
-        <button @click="addClass" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#523946] text-base font-medium text-white hover:bg-blue-600 sm:w-auto sm:text-sm">
+        <button @click="joinClass" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#523946] text-base font-medium text-white hover:bg-blue-600 sm:w-auto sm:text-sm">
           ذخیره
         </button>
         <button @click="closeModal" class="mt-3 w-full inline-flex justify-center rounded-md border-gray-300 shadow-sm px-6 py-2 bg-gray-300 text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
@@ -50,26 +45,23 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
-import {useClassStore} from "@/stores/ClassStore";
-import type {Class} from "@/models/classes.interface";
-import {data} from "autoprefixer";
+import { onMounted, ref } from 'vue';
+import { useClassStore } from '@/stores/ClassStore';
+import { useJoinClassStore } from '@/stores/JoinClassStore';
+import type { Class } from '@/models/classes.interface';
 
-const classStore = useClassStore()
-const classes = ref([] as Class[])
-onMounted( ()=>{
+const classStore = useClassStore();
+const joinClassStore = useJoinClassStore();
+const classes = ref([] as Class[]);
+
+onMounted(() => {
   classStore.getStudentClasses().then((data) => {
-    classes.value = data
-  })
-})
-
+    classes.value = data;
+  });
+});
 
 const showModal = ref(false);
-
-const newClass = ref({
-  link: '',
-  password: ''
-});
+const inviteCode = ref('');
 
 const openModal = () => {
   showModal.value = true;
@@ -77,22 +69,21 @@ const openModal = () => {
 
 const closeModal = () => {
   showModal.value = false;
-  newClass.value.link = '';
-  newClass.value.password = '';
+  inviteCode.value = '';
 };
 
-const addClass = () => {
-  if (!newClass.value.link) {
-    alert('لطفاً لینک کلاس را وارد کنید.');
-    return;
-  }
-  if (!newClass.value.password) {
+const joinClass = async () => {
+  if (!inviteCode.value) {
     alert('لطفاً رمز عبور کلاس را وارد کنید.');
     return;
   }
-  // Add logic to add the class
-  console.log('Adding class:', newClass.value);
-  closeModal();
+  try {
+    await joinClassStore.joinClass(inviteCode.value);
+    alert('شما با موفقیت به کلاس پیوستید.');
+    closeModal();
+  } catch (error) {
+    alert('خطایی در عضویت در کلاس رخ داد. لطفاً دوباره تلاش کنید.');
+  }
 };
 </script>
 

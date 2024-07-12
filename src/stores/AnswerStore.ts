@@ -7,15 +7,10 @@ export const useAnswerStore = defineStore('answer', () => {
     const baseUrl = import.meta.env.VITE_API_URL + 'answers';
 
     async function createAnswer(data: Answer[]) {
-        return apiStore.post(baseUrl, data).then(({ data }) => {
+        return apiStore.post(baseUrl, {answers:data}).then(({ data }) => {
             return data.data;
         });
     }
-
-    // async function submitAnswers(answers: Answer[]) {
-    //     const promises = answers.map(answer => createAnswer(answer));
-    //     return Promise.all(promises);
-    // }
 
     return { createAnswer };
 });
