@@ -1,5 +1,6 @@
 import type {Exam} from "@/models/exams.interface";
-import type {Choice} from "@/models/choice.interface";
+import type {Choice} from "@/models/choices.interface";
+
 
 
 export interface Question {

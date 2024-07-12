@@ -11,14 +11,11 @@ import ExamsList from "@/views/student/components/ExamsList.vue";
       <h2 class="text-4xl font-bold pb-5">اطلاعات کاربری</h2>
       <UserInformation/>
     </div>
-    <div class="w-2/4 flex-col flex items-center pt-10">
-      <h2 class="text-4xl font-bold pb-5">کلاس ها</h2>
+    <div class="w-3/4 flex-col flex p-10">
+      <h2 class="text-center text-4xl font-bold pb-5">کلاس ها</h2>
       <ClassesList/>
     </div>
-    <div class="w-1/4 flex-col flex items-center pt-10">
-      <h2 class="text-4xl font-bold pb-5">آزمون ها</h2>
-      <ExamsList/>
-    </div>
+
   </div>
 </template>
 

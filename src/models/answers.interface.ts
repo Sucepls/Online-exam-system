@@ -4,18 +4,18 @@ import type {Exam} from "@/models/exams.interface";
 import type {Choice} from "@/models/choices.interface";
 
 export interface Answer {
-  id: number;
+  id?: number;
   text?: string;
   fileUrl?: string;
-  student: User;
-  studentId: number;
-  question: Question;
+  student?: User;
+  studentId?: number;
+  question?: Question;
   questionId: number;
   choiceId?:number;
   choice?: Choice;
-  exam: Exam;
+  exam?: Exam;
   examId: number;
   grade?: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

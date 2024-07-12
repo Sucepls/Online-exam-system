@@ -7,10 +7,10 @@ import type {Class} from "@/models/classes.interface";
 
 const showModal = ref(false);
 
-defineProps(['classInfo'])
+const props = defineProps(['classInfo'])
 
 const goToSignUpPage = () => {
-  router.push('/exams');
+  router.push({name:'exams',params:{id:props.classInfo.id}});
 };
 
 const openModal = () => {

@@ -48,7 +48,7 @@ const router = createRouter({
           component: ClassesView
         },
         {
-          path: 'exams',
+          path: 'exams/:id',
           name: 'exams',
           component: ExamsView
         },

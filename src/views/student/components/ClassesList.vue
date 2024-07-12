@@ -1,10 +1,10 @@
 <template>
   <div class="bg-[#395253] p-4 flex-col pt-10">
-    <div class="flex justify-between mb-4">
+    <div class="flex justify-around mb-4">
       <input type="text" placeholder="جستجوی نام کلاس، استاد یا مؤسسه آموزشی..." class="w-2/3 p-2 rounded-lg border" />
       <button @click="openModal" class="bg-[#523946] text-white py-2 px-4 rounded-lg">کلاس جدید</button>
     </div>
-    <div class="flex-col flex">
+    <div class="flex-col flex ps-14">
       <div class="flex">
         <div v-for="c in classes" :key="c.id" class="border m-1 rounded-lg gap-4">
           <div class="bg-[#c6adac] p-4 rounded">

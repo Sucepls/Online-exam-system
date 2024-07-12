@@ -15,6 +15,7 @@ const answers = ref([] as Answer[]);
 const currentAnswer = ref({} as Answer);
 const currentQuestionIndex = ref(0);
 
+
 watch(currentQuestionIndex, (newIndex, oldIndex) => {
   // Save the current answer before moving to the next question
   if (oldIndex >= 0) {
@@ -50,7 +51,7 @@ function getAnswer(qid: number): Answer {
 </script>
 
 <template>
-  <div class="text-gray-700 quiz-container p-4 bg-[#847272] border rounded-lg shadow-lg max-w-md mx-auto w-1/2" v-if="questions.length > 0">
+  <div class="text-gray-700 quiz-container p-4 bg-[#847272] border rounded-lg shadow-lg max-w-md mx-auto w-1/2" v-if="questions.length !=0">
     <div class="question-section mb-4 flex justify-between items-center">
       <h2>
         {{ currentQuestionIndex + 1 }}. {{ questions[currentQuestionIndex].text }}
@@ -76,8 +77,9 @@ function getAnswer(qid: number): Answer {
           class="btn-prev bg-[#adacc6] p-2 rounded hover:bg-gray-400"
           :disabled="currentQuestionIndex == 0"
       >
-        <backIcon />
+        <backIcon/>
       </button>
+      <button class="btn-prev bg-[#adacc6] p-2 rounded hover:bg-gray-400">اتمام آزمون</button>
       <button
           @click="nextQuestion"
           class="btn-next bg-[#adacc6] p-2 rounded hover:bg-gray-400"

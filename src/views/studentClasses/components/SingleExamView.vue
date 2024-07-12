@@ -7,15 +7,15 @@ import Loading from "vue-loading-overlay";
 import type {Question} from "@/models/questions.interface";
 
 
-const props = defineProps(['examId'])
+const props = defineProps(['exam'])
 const examStore= useExamStore()
 const isLoading=ref(true)
 
 const questions = ref([] as Question[])
 
-watch(()=>props.examId, (current) => {
+watch(()=>props.exam, (current) => {
   isLoading.value=true
-  examStore.getQuestions(current).then((data)=>{
+  examStore.getQuestions(current.id).then((data)=>{
     questions.value=data
     isLoading.value=false
   })
@@ -23,28 +23,28 @@ watch(()=>props.examId, (current) => {
 </script>
 
 <template>
-  <div v-if="examId" class="bg-[#c6adac] flex flex-col p-2 mt-10 rounded-lg border vl-parent">
+  <div v-if="exam" class="bg-[#c6adac] flex flex-col p-2 mt-10 rounded-lg border vl-parent">
     <loading v-model:active="isLoading"
              :is-full-page="false"/>
     <div class="flex justify-center rounded  mt-2">
       <div class="px-2 border-e">
         <p class="block text-sm font-medium text-gray-700">نام آزمون: <span>
-        آزمون مبانی کامپیوتر
+        {{exam.title}}
       </span></p>
       </div>
       <div class="px-2 border-e flex-col">
-        <p class="block text-sm font-medium text-gray-700">تاریخ آزمون:<span>
-        1403/4/15
+        <p class="text-left block text-sm font-medium text-gray-700">تاریخ آزمون:<span class="ps-1">
+        {{ new Date(exam.startTime).toLocaleString('fa') }}
       </span></p>
       </div>
       <div class="px-2 border-e">
-        <p class="block text-sm font-medium text-gray-700">زمان آزمون:<span>
-        20
+        <p class="block text-sm font-medium text-gray-700">زمان آزمون:<span class="ps-1">
+        {{(new Date(exam.endTime).valueOf() - new Date(exam.startTime).valueOf())/1000/60}} دقیقه
       </span></p>
       </div>
       <div class="px-2 border-e">
         <p class="block text-sm font-medium text-gray-700">تعداد دفعات شرکت مجاز: <span>
-        5
+        {{ exam.attemptsAllowed }}
       </span></p>
       </div>
       <div class="flex items-center px-1">

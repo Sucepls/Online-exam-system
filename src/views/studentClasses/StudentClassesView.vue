@@ -11,12 +11,8 @@ import {useRoute} from "vue-router";
 
 const route= useRoute()
 const classId= ref(route.params.id)
-const selectedExamId= ref(null as number|null)
+const selectedExam= ref(null as Exam|null)
 
-
-onMounted(()=>{
-
-})
 
 </script>
 
@@ -24,15 +20,15 @@ onMounted(()=>{
   <div class="bg-[#395253] flex">
     <div class="w-1/4 flex-col flex items-center pt-10">
       <h2 class="text-4xl font-bold pb-5">اطلاعات کلاس</h2>
-      <UserInformationView/>
+      <UserInformationView :class-id="classId"/>
     </div>
     <div class="w-2/4 flex-col flex items-center pt-10">
       <h2 class="text-4xl font-bold pb-5">آزمون</h2>
-      <SingleExamView :exam-id="selectedExamId" />
+      <SingleExamView :exam="selectedExam" />
     </div>
     <div class="w-1/4 flex-col flex items-center pt-10">
       <h2 class="text-4xl font-bold pb-5">آزمون ها</h2>
-      <ExamsView :classId="classId" @select-exam="(examId)=>{selectedExamId=examId}"/>
+      <ExamsView :classId="classId" @select-exam="(exam)=>{selectedExam=exam}"/>
     </div>
   </div>
 </template>

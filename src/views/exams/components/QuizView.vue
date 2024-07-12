@@ -1,22 +1,22 @@
 <template>
-  <div class="quiz-container p-4 bg-[#847272] border rounded-lg shadow-lg max-w-md mx-auto w-1/2">
+  <div class="quiz-container p-4 bg-[#847272] border rounded-lg shadow-lg max-w-md mx-auto w-1/2" v-if="questions.length!=0">
     <div class="question-section mb-4 flex justify-between items-center">
       <h2 class="">
-        {{ currentQuestionIndex + 1 }}. {{ questions[currentQuestionIndex].question }}
+        {{ currentQuestionIndex + 1 }}. {{ questions[currentQuestionIndex].text }}
       </h2>
 
     </div>
     <div class="text-sm options-section mb-4">
       <div
-          v-for="(option, index) in questions[currentQuestionIndex].options"
+          v-for="(option, index) in questions[currentQuestionIndex].choices"
           :key="index"
           class="option p-2 mb-2 border rounded cursor-pointer"
           :class="{
           'bg-blue-100': selectedOption === index,
-          'bg-[#7eb280]': index === questions[currentQuestionIndex].correctOption
+          'bg-[#7eb280]': questions[currentQuestionIndex].choices[index].isCorrect
         }"
       >
-        {{ option }}
+        {{ option.text }}
       </div>
     </div>
     <div class="flex justify-between py-4">
@@ -51,13 +51,13 @@
         <h3 class="text-xl text-center font-bold mb-4">ویرایش سوال</h3>
         <div class="mb-4">
           <label class="block mb-2">متن سوال:</label>
-          <input type="text" v-model="editQuestionText" class="w-full p-2 border rounded">
+          <input type="text" v-model="editQuestion.text" class="w-full p-2 border rounded">
         </div>
         <div class="mb-4">
           <label class="block mb-2">گزینه‌ها:</label>
-          <div v-for="(option, index) in editOptions" :key="index" class="mb-2 flex items-center">
-            <input type="text" v-model="editOptions[index]" class="flex-1 p-2 border rounded">
-            <input type="radio" v-model="editCorrectOption" :value="index" class=" mr-3">
+          <div v-for="(choice, index) in editQuestion.choices" :key="index" class="mb-2 flex items-center">
+            <input type="text" v-model="choice.text" class="flex-1 p-2 border rounded">
+            <input type="checkbox" v-model="choice.isCorrect" :value="index" class=" mr-3">
           </div>
         </div>
         <div class="flex flex-col items-center space-y-1">
@@ -74,42 +74,25 @@ import { ref } from 'vue';
 import backIcon from '@/assets/Icons/next-icon.svg?component'
 import nextIcon from '@/assets/Icons/perivous-icon.svg?component'
 import editIcon from '@/assets/Icons/Edit-icon.svg?component'
+import type {Question} from "@/models/questions.interface";
 
 
-interface Question {
-  question: string;
-  options: string[];
-  correctOption: number;
-}
 
-const questions = ref<Question[]>([
-  {
-    question: 'سوال اول چیست؟',
-    options: ['گزینه 1', 'گزینه 2', 'گزینه 3', 'گزینه 4'],
-    correctOption: 0,
+const props = defineProps({
+  'questions': {
+    default: [] as Question[],
   },
-  {
-    question: 'سوال دوم چیست؟',
-    options: ['گزینه 1', 'گزینه 2', 'گزینه 3', 'گزینه 4'],
-    correctOption: 1,
-  },
-  {
-    question: 'سوال سوم چیست؟',
-    options: ['گزینه 1', 'گزینه 2', 'گزینه 3', 'گزینه 4'],
-    correctOption: 2,
-  },
-]);
+});
+
 
 const currentQuestionIndex = ref(0);
 const selectedOption = ref<number | null>(null);
 
 const isEditPopupOpen = ref(false);
-const editQuestionText = ref('');
-const editOptions = ref<string[]>([]);
-const editCorrectOption = ref<number | null>(null);
+const editQuestion = ref({} as Question);
 
 const nextQuestion = () => {
-  if (currentQuestionIndex.value < questions.value.length - 1) {
+  if (currentQuestionIndex.value < props.questions.length - 1) {
     currentQuestionIndex.value++;
     selectedOption.value = null;
   }
@@ -127,10 +110,7 @@ const selectOption = (index: number) => {
 };
 
 const openEditPopup = () => {
-  const currentQuestion = questions.value[currentQuestionIndex.value];
-  editQuestionText.value = currentQuestion.question;
-  editOptions.value = [...currentQuestion.options];
-  editCorrectOption.value = currentQuestion.correctOption;
+  editQuestion.value =  {...props.questions[currentQuestionIndex.value]};
   isEditPopupOpen.value = true;
 };
 
@@ -139,12 +119,8 @@ const closeEditPopup = () => {
 };
 
 const saveEdit = () => {
-  if (editCorrectOption.value !== null) {
-    questions.value[currentQuestionIndex.value] = {
-      question: editQuestionText.value,
-      options: editOptions.value,
-      correctOption: editCorrectOption.value,
-    };
+  if (editQuestion.value !== null) {
+
     closeEditPopup();
   }
 };
