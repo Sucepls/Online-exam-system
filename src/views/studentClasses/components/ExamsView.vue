@@ -11,6 +11,7 @@ const emit = defineEmits(['selectExam']);
 
 const isLoading = ref(true);
 const exams = ref([] as Exam[]);
+const examAttempts = ref({} as Record<string, number>);
 
 const sortExams = (exams: Exam[]) => {
   const now = new Date().getTime();
@@ -21,17 +22,17 @@ const sortExams = (exams: Exam[]) => {
     const bEnd = new Date(b.endTime).getTime();
 
     if (aEnd < now && bEnd < now) {
-      return aEnd - bEnd; // both exams ended
+      return aEnd - bEnd;
     } else if (aStart > now && bStart > now) {
-      return aStart - bStart; // both exams not started
+      return aStart - bStart;
     } else if (aStart <= now && aEnd >= now) {
-      return -1; // a is ongoing
+      return -1;
     } else if (bStart <= now && bEnd >= now) {
-      return 1; // b is ongoing
+      return 1;
     } else if (aStart > now && bEnd < now) {
-      return -1; // a not started, b ended
+      return -1;
     } else if (bStart > now && aEnd < now) {
-      return 1; // b not started, a ended
+      return 1;
     } else {
       return 0;
     }
@@ -42,6 +43,9 @@ onMounted(() => {
   classStore.getExams(props.classId).then((data) => {
     isLoading.value = false;
     exams.value = sortExams(data);
+    exams.value.forEach((exam) => {
+      examAttempts.value[exam.id] = exam.attemptsAllowed;
+    });
   });
 });
 
@@ -49,7 +53,7 @@ const isExamAvailable = (exam: Exam) => {
   const now = new Date().getTime();
   const startTime = new Date(exam.startTime).getTime();
   const endTime = new Date(exam.endTime).getTime();
-  return now >= startTime && now <= endTime;
+  return now >= startTime && now <= endTime && examAttempts.value[exam.id] > 0;
 };
 
 const getTimeRemaining = (endTime: string) => {
@@ -88,6 +92,7 @@ const getTimeToStart = (startTime: string) => {
 
 const handleStartExam = (exam: Exam) => {
   if (confirm('آیا مطمئن هستید که می‌خواهید آزمون را شروع کنید؟')) {
+    examAttempts.value[exam.id]--;
     emit('selectExam', exam);
   }
 };
@@ -112,7 +117,7 @@ const handleStartExam = (exam: Exam) => {
                 شروع آزمون
               </button>
             </div>
-            <div>
+            <div class="flex">
               <dt v-if="!isExamAvailable(exam)" class="text-xs flex w-full text-gray-700">
                 {{ new Date().getTime() < new Date(exam.startTime).getTime()
                   ? ` ${formatTime(getTimeToStart(exam.startTime))} مانده به شروع آزمون`
@@ -122,6 +127,12 @@ const handleStartExam = (exam: Exam) => {
               <dt v-else class="text-xs flex w-full text-gray-700">
                 {{ formatTime(getTimeRemaining(exam.endTime)) }} مانده به پایان آزمون
               </dt>
+              <dt class="text-xs w-full text-gray-700">
+                نمره: {{exam.id}}
+              </dt>
+            </div>
+            <div class="text-xs flex w-full text-gray-700">
+              تعداد دفعات باقی‌مانده: {{ examAttempts[exam.id] }}
             </div>
           </div>
         </dl>
@@ -136,5 +147,20 @@ const handleStartExam = (exam: Exam) => {
 }
 .overflow-y-auto {
   overflow-y: auto;
+}
+.text-xs {
+  font-size: 0.75rem;
+}
+.font-medium {
+  font-weight: 500;
+}
+.rounded-md {
+  border-radius: 0.375rem;
+}
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+.hover\:bg-blue-600:hover {
+  background-color: #3b82f6;
 }
 </style>

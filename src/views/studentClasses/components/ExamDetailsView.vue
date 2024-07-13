@@ -21,13 +21,13 @@ const currentQuestionIndex = ref(0);
 function submitAnswer(){
   answers.value[0]={...answers.value[0],examId:props.questions[0].examId,questionId:props.questions[0].id}
   useAnswer.createAnswer(answers.value).then((data)=>{
-    toast('سوال با موفقیت ایجاد شد', {
+    toast('جواب ثبت شد', {
       autoClose: 1500,
       rtl: true,
       type: 'success'
     })
   }).catch(()=>{
-    toast('سوال ایجاد نشد!', {
+    toast('جواب ثبت نشد', {
       autoClose: 1500,
       rtl: true,
       type: 'error'
